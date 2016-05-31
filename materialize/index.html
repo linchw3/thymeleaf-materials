@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-  <html>
+  <html xmlns:th="http://www.thymeleaf.org">
   <head>
   <!--Import materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
@@ -20,9 +20,9 @@
     <div class="av-wrapper">
     <a href="#" class="brand-logo">.handsome</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="login.html">登录</a></li>
-      <li><a href="register.html">注册</a></li>
-      
+      <li><a href="login.html" th:href="@{/login}" th:if="${not user.has_user}">登录</a></li>
+      <li><a href="register.html" th:href="@{/register}" th:if="${not user.has_user}">注册</a></li>
+      <li th:text="${user.user_name}" th:if="${user.has_user}">yongye</li>
     </div>
   </nav>
 
@@ -33,37 +33,63 @@
   <div class = "col s12 offset-s1">
     <h4 class="pink-text text-darken-2">影片推荐</h4>
   </div>
-<div class = "col s2 offset-s1">
-<div class="card small">
-     <div class="card-image waves-effect waves-block waves-light">
+  <div class="col s1"><p> </p></div>
+
+  <div class = "col s2" th:each="suggest : ${suggests}">
+    <div class="card small">
+      <div class="card-image waves-effect waves-block waves-light">
+       <img class="activator" th:src="@{/images/{Id}.png(Id = $(suggest.id))}" >
+      </div>
+    <div class="card-content">
+       <span class="card-title activator grey-text text-darken-4" th:text="${suggest.movie_name}">Card Title <i
+       class="mdi-navigation-more-vert right"></i></span>
+       
+    </div>
+    <div class="card-reveal">
+       <span class="card-title grey-text text-darken-4" th:text="${suggest.movie_name}">Card Title <i class="mdi-navigation-close right"></i></span>
+       <p th:text="${suggest.description}">Here is some more information about this product that is only revealed once clicked on.</p>
+       <!-- 此处button传参待讨论 -->
+       <form>
+       <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">去选座
+       <i class="material-icons right">send</i>
+      </button></form>
+    </div>
+   </div> 
+  </div>
+
+
+
+  <div class = "col s2">
+    <div class="card small">
+      <div class="card-image waves-effect waves-block waves-light">
        <img class="activator" src="1.jpg">
-     </div>
-     <div class="card-content">
+      </div>
+    <div class="card-content">
        <span class="card-title activator grey-text text-darken-4">Card Title <i
        class="mdi-navigation-more-vert right"></i></span>
-       <p><a href="#">This is a link</a></p>
-     </div>
-     <div class="card-reveal">
+    </div>
+    <div class="card-reveal">
        <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
        <p>Here is some more information about this product that is only revealed once clicked on.</p>
-     </div>
+       <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">去选座 <i class="material-icons right">send</i></button>
+    </div>
    </div> 
-</div>
+  </div>
 
 
-<div class = "col s2">
-<div class="card small">
+  <div class = "col s2">
+   <div class="card small">
      <div class="card-image waves-effect waves-block waves-light">
        <img class="activator" src="2.jpg">
      </div>
      <div class="card-content">
        <span class="card-title activator grey-text text-darken-4">Card Title <i
        class="mdi-navigation-more-vert right"></i></span>
-       <p><a href="FindByFile.html">去看这部电影</a></p>
      </div>
      <div class="card-reveal">
        <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+       <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">去选座 <i class="material-icons right">send</i></button>
      </div>
    </div> 
 </div>
@@ -77,11 +103,11 @@
      <div class="card-content">
        <span class="card-title activator grey-text text-darken-4">Card Title <i
        class="mdi-navigation-more-vert right"></i></span>
-       <p><a href="#">This is a link</a></p>
      </div>
      <div class="card-reveal">
        <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+       <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">去选座 <i class="material-icons right">send</i></button>
      </div>
    </div> 
 </div>
@@ -96,34 +122,17 @@
      <div class="card-content">
        <span class="card-title activator grey-text text-darken-4">Card Title <i
        class="mdi-navigation-more-vert right"></i></span>
-       <p><a href="#">This is a link</a></p>
      </div>
      <div class="card-reveal">
        <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+       <button class="btn waves-effect waves-light red lighten-1" type="submit" name="action">去选座 <i class="material-icons right">send</i></button>
      </div>
    </div> 
 </div>
 
 
-<div class = "col s2">
-<div class="card small">
-     <div class="card-image waves-effect waves-block waves-light">
-       <img class="activator" src="5.jpg">
-     </div>
-     <div class="card-content">
-       <span class="card-title activator grey-text text-darken-4">Card Title <i
-       class="mdi-navigation-more-vert right"></i></span>
-       <p><a href="#">This is a link</a></p>
-     </div>
-     <div class="card-reveal">
-       <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-       <p>Here is some more information about this product that is only revealed once clicked on.</p>
-     </div>
-   </div> 
 </div>
-
-</div>>
 
   <div class="row container">
     <div class="col s12">
@@ -137,11 +146,11 @@
     <div id="test1" class="col s12">Test 1</div>
     <div id="test2" class="col s12">
     <div class="row">
-    <form class="col s12">
+    <form class="col s12" action="FindByFile.html" th:action="@{/find_by_movie}" th:object="${movie}" method="post">
       <div class="row">
         <div class="input-field col s8 offset-s2">
           <i class="material-icons prefix">search</i>
-          <input id="icon_prefix" type="text" class="validate">
+          <input placeholder="输入影片名字" id="file_name" type="text" class="validate">
         </div>
         <div><p> </p></div>
         <button class="btn waves-effect waves-light btn-large" type="submit" name="action">go</button> 
@@ -151,11 +160,11 @@
       </div>
     <div id="test3" class="col s12">
     <div class="row">
-    <form class="col s12">
+    <form class="col s12" action="FindByCinema.html" th:action="@{/find_by_cinema}" th:object="${cinema}" method="post">
       <div class="row">
         <div class="input-field col s8 offset-s2">
           <i class="material-icons prefix">search</i>
-          <input id="icon_prefix" type="text" class="validate">
+          <input placeholder="输入影院名字" id="cinema_name" type="text" class="validate"> 
         </div>
         <div><p> </p></div>
         

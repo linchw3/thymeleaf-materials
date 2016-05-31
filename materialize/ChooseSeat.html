@@ -20,8 +20,9 @@
     <div class="av-wrapper">
     <a href="#" class="brand-logo">.handsome</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="login.html">登录</a></li>
-      <li><a href="register.html">注册</a></li>
+      <li><a href="login.html" th:href="@{/login}" th:if="${not user.has_user}">登录</a></li>
+      <li><a href="register.html" th:href="@{/register}" th:if="${not user.has_user}">注册</a></li>
+      <li th:text="${user.user_name}" th:if="${user.has_user}">yongye</li>
       <li><a href="index.html">主页</a></li>
     </div>
   </nav>
@@ -32,10 +33,10 @@
   </div>
   <div class = "row">
   <div class = "col s12 offset-s1">
-    <h4 class="pink-text text-darken-2">飞扬影城</h4>
+    <h4 class="pink-text text-darken-2" th:text="$(cinema.cinema_name)">飞扬影城</h4>
   </div>
   <div class = "col s12 offset-s1">
-    <h5 class="pink-text text-darken-2">2015-05-25 12:25 一号厅</h5>
+    <h5 class="pink-text text-darken-2" th:text="#{${data}+" " + ${time} + " " + ${hall_id}}">2015-05-25 12:25 一号厅</h5>
   </div>
   </div>
 
@@ -44,12 +45,20 @@
   <div class="card deep-orange lighten-5">
   <table class = "hoverable centered">
       <thead >
-        <tr>
-
-        </tr>
+      
       </thead>
 
       <tbody >
+
+        <tr th:each="_row : ${row_list}">
+          <td th:each="seat : ${_row}" th:switch="${seat.state}" class = "hoverable centered">
+
+           <button th:case="1" class="btn-floating btn-large waves-effect waves-light red"> <i class="material-icons prefix">accessibility</i></button>
+           <button th:case="2" class="btn-floating btn-large waves-effect waves-light blue-grey lighten-4"> <i class="material-icons prefix">accessibility</i></button>
+           <button th:case="3" class="btn-floating btn-large waves-effect waves-light "> <i class="material-icons prefix">accessibility</i></button>
+          </td>
+        </tr>
+
         <tr >
           <td class = "hoverable centered">
            <a class="btn-floating btn-large waves-effect waves-light red"> <i class="material-icons prefix">accessibility</i></a>
@@ -219,16 +228,16 @@
       <div class="card-content">
        <span class="card-title activator grey-text text-darken-4">影院介绍 <i
        class="mdi-navigation-more-vert right"></i></span>
-       <p><a href="#">This is a link</a></p>
       </div>
       <div class="card-reveal">
        <span class="card-title grey-text text-darken-4">影院介绍 <i class="mdi-navigation-close right"></i></span>
-       <p>Here is some more information about this product that is only revealed once clicked on.</p>
+       <p th:text="${cinema.description}">Here is some more information about this product that is only revealed once clicked on.</p>
       </div>
       </div> 
       <div><h1> </h1> <br /></div>
       <div>
-        <button class="btn waves-effect waves-light col s4 offset-s4 btn-large"  type="submit" name="make_order"><i class="material-icons prefix">shopping_cart</i></button>
+      <form action="order.html">
+        <button class="btn waves-effect waves-light col s4 offset-s4 btn-large"  type="submit" name="make_order" ><i class="material-icons prefix">shopping_cart</i></button> </form>
       </div>
     </div>
     </div>

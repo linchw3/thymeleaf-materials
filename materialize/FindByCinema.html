@@ -20,8 +20,9 @@
     <div class="av-wrapper">
     <a href="#" class="brand-logo">.handsome</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="login.html">登录</a></li>
-      <li><a href="register.html">注册</a></li>
+      <li><a href="login.html" th:href="@{/login}" th:if="${not user.has_user}">登录</a></li>
+      <li><a href="register.html" th:href="@{/register}" th:if="${not user.has_user}">注册</a></li>
+      <li th:text="${user.user_name}" th:if="${user.has_user}">yongye</li>
       <li><a href="index.html">主页</a></li>
     </div>
   </nav>
@@ -32,7 +33,7 @@
   </div>
   <div class = "row">
   <div class = "col s12 offset-s1">
-    <h4 class="pink-text text-darken-2">飞扬影城</h4>
+    <h4 class="pink-text text-darken-2" th:text = "${cinema.name}">飞扬影城</h4>
   </div>
   <div class = "col s12 offset-s1">
     <h5 class="pink-text text-darken-2">2015-05-25 排期</h5>
@@ -40,7 +41,7 @@
   </div>
 
   <div class="row">
-  <div class="col s8 offset-s1">
+  <div class="col s7 offset-s1">
   <div class="card deep-orange lighten-5">
   <table class = "bordered hoverable centered highlight">
       <thead >
@@ -53,6 +54,15 @@
       </thead>
 
       <tbody >
+
+        <tr th:each="movie_today : ${movie_list}">
+         <td th:text="${movie_today.time}">12:00</td>
+          <td th:text="${movie_today.name}">愤怒的小鸟</td>
+          <td th:text="${movie_today.price}">44</td>
+          <td> <button class="btn waves-effect waves-light col s4 offset-s4"  type="submit" name="action" action = "ChooseSeat.html">去选座</button></td>
+        </tr>
+
+
         <tr >
           <td>12:00</td>
           <td>愤怒的小鸟</td>
@@ -111,19 +121,24 @@
     </table>
     </div>
     </div>
-    <div class = "col s2">
+    <div class = "col s3">
       <div class="card small">
      <div class="card-image waves-effect waves-block waves-light">
-       <img class="activator" src="6.jpg">
+       <img class="activator" src="6.jpg"  th:src="@{/images/{Id}.png(Id = $(cinema.id))}">
      </div>
      <div class="card-content">
        <span class="card-title activator grey-text text-darken-4">影院介绍 <i
        class="mdi-navigation-more-vert right"></i></span>
-       <p><a href="#">This is a link</a></p>
      </div>
      <div class="card-reveal">
        <span class="card-title grey-text text-darken-4">影院介绍 <i class="mdi-navigation-close right"></i></span>
-       <p>Here is some more information about this product that is only revealed once clicked on.</p>
+       <p th:text="${cinema.description}">Here is some more information about this product that is only revealed once clicked on.</p>
+       <h1> </h1>
+       <span class="card-title activator grey-text text-darken-4">影院评价 <i
+       class="mdi-navigation-more-vert right"></i></span>
+       <div th:each="comment : ${comment_list}">
+         <p th:text="#{${comment.id} + ":" + ${comment.content}}">lalala</p>
+       </div>
      </div>
    </div> 
     </div>

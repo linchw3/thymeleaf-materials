@@ -20,7 +20,6 @@
     <div class="av-wrapper">
     <a href="#" class="brand-logo">.handsome</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="login.html">登录</a></li>
       <li><a href="index.html">主页</a></li>
       
     </div>
@@ -30,13 +29,17 @@
 
 <div class="row">
      <div class="col s6 offset-s1">
-       <div class="card deep-orange lighten-5">
+     
+
+
+
+       <div th:each="order : ${order_list}" class="card deep-orange lighten-5">
           <div class="input-field col s4 offset-s5">
           <h3>订单</h3>
-        </div>
-  <div class = "container">
-<div class="row">
-    <form class="col s12">
+          </div>
+      <div class = "container">
+      <div class="row">
+      <form class="col s12">
       <div class="row">
       <table class = "centered highlight">
       <thead >
@@ -44,24 +47,24 @@
      
       <tbody >
       <tr>
-        <td>影片名字</td>
-        <td>愤怒的小鸟</td>
+        <td >影片名字</td>
+        <td th:text="${order.movie_name}">愤怒的小鸟</td>
       </tr>
       <tr>
         <td>影院名字</td>
-        <td>飞扬影城</td>
+        <td th:text="${order.cinema}">飞扬影城</td>
       </tr>
       <tr>
         <td>时间</td>
-        <td>2015-06-15 23：:20</td>
+        <td th:text="${order.time}">2015-06-15 20:20</td>
       </tr>
       <tr>
         <td>座位</td>
-        <td>3排12号</td>
+        <td th:text="#{${order.movie_row} + "排" + ${order.movie_col} + "号"}">3排12号</td>
       </tr>
       <tr>
         <td>票价</td>
-        <td>44元</td>
+        <td th:text="${order.price}">44元</td>
       </tr>
       </tbody>
       </table>
@@ -76,12 +79,18 @@
   </div>
 
 </div>
+
+
+
+
   </div>
+
+
   <div class = "col s2 offset-s1">
           <div class="card deep-orange lighten-5 row">
-            <div class="card-content red-text col s6 offset-s3">
+            <div class="card-content red-text col s7 offset-s3">
               <h4>总额</h4>
-              <h1>44</h1>
+              <h1 th:text="${all_price}">44</h1>
             </div>
             <div class="card-action col s12">
               <button class="btn waves-effect waves-light col s6 offset-s3 btn-large"  type="submit" name="action">去支付</button>
